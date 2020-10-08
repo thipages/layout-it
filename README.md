@@ -32,6 +32,7 @@ Layout element for building flex grids
 ```
 <details>
  <summary>More examples</summary>
+ 
 ```html
     <!-- 3 rows header/footer layout with left column
          Note : expressions should not contain space characters

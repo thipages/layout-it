@@ -3,6 +3,16 @@ Custom elements for building layouts
 - `<grid-it />`
 - `<center-it />`
 
+## How To Use
+- via npm : `npm i layout-it` then use `import from 'layout-it'`;
+- within HTML via script tag :
+```html
+    <!-- ES5 version -->
+    <script src="min.js"></script>
+    <!-- OR ES6 version -->
+    <script type="module" src="./../index.min.js"></script>
+```
+
 ## `<grid-it />`
 Layout element for building flex grids
 - extends `HTMLElement`
@@ -19,7 +29,10 @@ Layout element for building flex grids
         <div>Main</div>
         <div>Footer</div>
     </grid-it>
-
+```
+<details>
+ <summary>More examples</summary>
+```html
     <!-- 3 rows header/footer layout with left column
          Note : expressions should not contain space characters
                 eg minmax(min-content, 33%) will not work -->
@@ -47,6 +60,7 @@ Layout element for building flex grids
         <div>Footer</div>
     </grid-it>
 ```
+</details>
 
 ## `<center-it />`
 Layout element for content centering

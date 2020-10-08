@@ -76,7 +76,7 @@ Layout element for content centering
 <details>
   <summary>Styles, Dependencies and Polyfill</summary>
   
-  ## Default styles
+  ### Default styles
   **_layout-it_** uses a default style
   ```css
       html, body {
@@ -88,10 +88,10 @@ Layout element for content centering
       }
   ```
   
-  ## Dependency
+  ### Dependency
   - [ustyler](https://github.com/WebReflection/ustyler) for inserting the default style in the head tag.
   
-  ## custom-elements polyfills
+  ### custom-elements polyfills
   See [WebReflection/custom-elements](https://github.com/WebReflection/custom-elements#how-to-polyfill)  
 </details>
 

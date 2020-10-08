@@ -31,7 +31,7 @@ Layout element for building flex grids
     </grid-it>
 ```
 <details>
- <summary>More examples</summary>
+ <summary>MORE EXAMPLES</summary>
  
 ```html
     <!-- 3 rows header/footer layout with left column

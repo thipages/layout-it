@@ -1,26 +1,16 @@
 let _uid=Math.random();
 const uid=(p="")=>p+(_uid++);
-
-const getTemplate=(s, uid)=> {
-    const tuple =(arr,n)=> Array.from({ length: arr.length / n }, (_, i) => arr.slice(i * n, i * n + n));
-    let [rowNum,colNum,...rest]=s.split(" ");
-    let fRows=rest.splice(0,rowNum);
-    let fCols=rest.splice(0,colNum);
-    let p=tuple(rest, colNum);
+const getAttribute=(n, k)=>n.getAttribute(k);
+const setAttribute=(n, k, v)=>n.setAttribute(k,v);
+const norm=(s)=>s.trim().replace( /\s\s+/g, ' ' );
+const getTemplateAreas=(rowNum, colNum, areas, uid)=> {
+    const tuple =(arr,n)=> Array.from({ length: arr.length / n }, (_, i) => arr.slice(i * n, i * n + n));;
+    let p=tuple(areas.split(' '), colNum);
     let r=[];
-    for (let i=0;i<p.length;i++) r.push(`'${p[i].map(v=>uid+v).join(" ")}'`);
-    return [
-        rest.length-fCols.length*fRows.length===0 &&
-        parseInt(rowNum)===fRows.length &&
-        parseInt(colNum)===fCols.length,
-        {
-            gridTemplateRows:fRows.join(" "),
-            gridTemplateColumns:fCols.join(" "),
-            gridTemplateAreas:r.join(" "),
-        }
-    ];
+    for (let i=0;i<p.length;i++) r.push(`'${p[i].map(v=>uid+'_'+v).join(" ")}'`);
+    return [r.length===rowNum*colNum,r.join(' ')];
 }
-const gridAreas=(t,parent,uid)=> {
+const registerChildren=(t, parent, uid)=> {
     let st=[...new Set(t.split(" "))].sort();
     let children=parent.children;
     let i=0;
@@ -32,17 +22,23 @@ const gridAreas=(t,parent,uid)=> {
 customElements.define(
     'grid-it',
     class extends HTMLElement {
-        static get observedAttributes() { return ['areas']; }
+        static get observedAttributes() { return ['areas','rows','columns']; }
         attributeChangedCallback(name, oldValue, newValue) {
-            this.areas = newValue;
+            let nv=norm(newValue);
+            setAttribute(this,'name',nv);
+            if (name==='rows' || name==='columns') setAttribute(this,'grid-template-'+name,nv);
         }
         connectedCallback() {
             let id=uid("g_");
-            let t=getTemplate(this.areas,id);
+            let t=getTemplateAreas(
+                getAttribute(this,'rows').split(' ').length,
+                getAttribute(this,'columns').split(' ').length,
+                getAttribute(this,'areas'),id
+            );
+            this.style.display = 'grid';
             if (t[0]) {
-                this.style.display = 'grid';
-                Object.assign(this.style, t[1]);
-                gridAreas(t[1].gridTemplateAreas, this,id);
+                setAttribute(this,'grid-template-areas',t[1]);
+                registerChildren(t[1], this,id);
             }
         }
     }

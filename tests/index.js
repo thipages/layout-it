@@ -1,2 +1,1 @@
-import layoutIt from "./../index.js";
-layoutIt();
+import "./../index.js";

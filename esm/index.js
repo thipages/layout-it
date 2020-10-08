@@ -1,7 +1,12 @@
-import lcss from './lcss.js';
 import './grid-it.js';
 import './center-it.js';
 import ustyler from 'ustyler';
-export default (css=lcss)=> {
-    ustyler(css);
-};
+ustyler(`
+    html, body {
+        padding:0;
+        margin:0;
+    }
+    *, *::before, *::after {
+        box-sizing: border-box;
+    }`
+);

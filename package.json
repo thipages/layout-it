@@ -1,8 +1,10 @@
 {
   "name": "layout-it",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "layout custom elements",
   "keywords": [
+    "html",
+    "css",
     "layout",
     "grid",
     "center",

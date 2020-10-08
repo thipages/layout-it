@@ -10,7 +10,7 @@ Custom elements for building layouts
     <!-- ES5 version -->
     <script src="min.js"></script>
     <!-- OR ES6 version -->
-    <script type="module" src="./../index.min.js"></script>
+    <script type="module" src="index.min.js"></script>
 ```
 
 ## `<grid-it />`
@@ -73,29 +73,27 @@ Layout element for content centering
 ```html
     <center-it>I am centered</center-it>
 ```
-
-
-## Default styles
-**_layout-it_** uses a default style
-```css
-    html, body {
-            padding:0;
-            margin:0;
-        }
-    *, *::before, *::after {
-        box-sizing: border-box;
-    }
-```
-It should be possible to override it.
-
-## Dependency
-- [ustyler](https://github.com/WebReflection/ustyler) for inserting the default style in the head tag.
-
-## custom-elements polyfills
-See [WebReflection/custom-elements](https://github.com/WebReflection/custom-elements#how-to-polyfill)
-
-
-
+<details>
+  <summary>Styles, Dependencies and Polyfill</summary>
+  
+  ## Default styles
+  **_layout-it_** uses a default style
+  ```css
+      html, body {
+              padding:0;
+              margin:0;
+          }
+      *, *::before, *::after {
+          box-sizing: border-box;
+      }
+  ```
+  
+  ## Dependency
+  - [ustyler](https://github.com/WebReflection/ustyler) for inserting the default style in the head tag.
+  
+  ## custom-elements polyfills
+  See [WebReflection/custom-elements](https://github.com/WebReflection/custom-elements#how-to-polyfill)  
+</details>
 
 
 

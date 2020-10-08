@@ -1,15 +1,20 @@
 # layout-it
 Custom elements for building layouts
+- `<grid-it />`
+- `<center-it />`
 
 ## `<grid-it />`
 Layout element for building flex grids
 - extends `HTMLElement`
 - based on `display:grid` style
-- with three custom attributes `rows`, `cols` and `areas` precursor of corresponding `grid-template-xxx` style properties.
+- with three custom attributes `rows`, `cols` and `areas` precursors of corresponding `grid-template-xxx` style properties.
 ### Examples
 ```html
     <!-- 3 rows header/footer layout -->
-    <grid-it style="height:100vh" rows="auto 1fr auto" columns="1fr" areas="a b c">
+    <grid-it style="height:100vh"
+             rows="auto 1fr auto"
+             columns="1fr"
+             areas="a b c">
         <div>Header</div>
         <div>Main</div>
         <div>Footer</div>
@@ -18,7 +23,10 @@ Layout element for building flex grids
     <!-- 3 rows header/footer layout with left column
          Note : expressions should not contain space characters
                 eg minmax(min-content, 33%) will not work -->
-    <grid-it style="height:100vh" rows="auto 1fr auto" columns="minmax(min-content,33%) 1fr" areas="a a b c d d">
+    <grid-it style="height:100vh"
+             rows="auto 1fr auto"
+             columns="minmax(min-content,33%) 1fr"
+             areas="a a b c d d">
         <div>Header</div>
         <div>Left</div>
         <div>Main</div>
@@ -27,7 +35,10 @@ Layout element for building flex grids
     <!-- 3 rows header/footer with 3 main equal columns
          Note : attributes supports multiple spaces
                 except for expression (see upper)-->
-    <grid-it style="height:100vh" rows="auto 1fr auto" columns="repeat(3,1fr)" areas="a a a  b c d  eee">
+    <grid-it style="height:100vh"
+             rows="auto 1fr auto"
+             columns="repeat(3,1fr)"
+             areas="a a a   b c d   e e e">
         <div>Header</div>
         <div>Left</div>
         <div>Main</div>

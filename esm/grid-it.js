@@ -35,6 +35,7 @@ const update=(n)=> {
 customElements.define(
     'grid-it',
     class extends HTMLElement {
+        // add an exclude area attribute for hiding children(display:none)
         static get observedAttributes() { return attrs; }
         attributeChangedCallback() {
             update(this);

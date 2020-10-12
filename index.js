@@ -2,44 +2,45 @@ let _uid=Math.random();
 const uid=(p="")=>(p+(_uid++)).replace('.','');
 const ga=(n, k)=>n.getAttribute(k);
 const norm=(s)=>s.trim().replace( /\s\s+/g, ' ' );
+const valid=(s)=>s && s!=="";
+const attrs=['rows','columns','areas'];
 const getTemplateAreas=(rowNum, colNum, areas, uid)=> {
-    const tuple =(arr,n)=> Array.from({ length: arr.length / n }, (_, i) => arr.slice(i * n, i * n + n));
-    let p=tuple(areas.split(' '), colNum);
+    const rows =(arr,n)=> Array.from({ length: arr.length / n }, (_, i) => arr.slice(i * n, i * n + n));
+    let p=rows(areas.split(' '), colNum);
     let r=[];
-    for (let i=0;i<p.length;i++) r.push(`'${p[i].map(v=>uid+"_"+v).join(" ")}'`);
-    return [r.length===rowNum*colNum,r.join(' ')];
+    for (let i=0;i<p.length;i++) r.push(`'${p[i].map(v=>v==='.'?v:uid+v).join(" ")}'`);
+    return r.join(' ');
 };
-const registerChildren=(children,oKeys, uid)=> {
-    for (let i=0,len=children.length;i<len;i++) {
-        children[i].style['grid-area']=uid+"_"+oKeys[i];
+const update=(n)=> {
+    if (attrs.filter(v=>!valid(ga(n,v))).length===0) {
+        let id = uid("g_");
+        let [r, c, a] = attrs.map(v => norm(ga(n, v)));
+        let [lr, lc, la] = [r, c, a].map(v => v.split(' ').length);
+        // check if areas=rows*cols
+        if (la === lr * lc) {
+            let t = getTemplateAreas(lr, lc, a, id);
+            let tv = [r, c, t];
+            // populate grid-template-(rows/columns/areas) container style
+            attrs.forEach((v, i) => n.style['grid-template-' + v] = tv[i]);
+            let oKeys = [...new Set(a.split(' '))].sort();
+            // Remove empty cells
+            let md = oKeys.filter(v => v !== '.');
+            // update children grid-area style
+            for (let i = 0, len = n.children.length; i < len; i++) {
+                n.children[i].style.gridArea = id + md[i];
+            }
+        }
     }
 };
 customElements.define(
     'grid-it',
     class extends HTMLElement {
-        static get observedAttributes() { return ['areas','rows','columns']; }
-        attributeChangedCallback(name, oldValue, newValue) {
-            
+        static get observedAttributes() { return attrs; }
+        attributeChangedCallback() {
+            update(this);
         }
         connectedCallback() {
-            let id=uid("g_");
             this.style.display = 'grid';
-            let r=norm(ga(this,'rows'));
-            let c=norm(ga(this,'columns'));
-            let a=norm(ga(this,'areas'));
-            let t=getTemplateAreas(
-                r.split(' ').length,
-                c.split(' ').length,
-                a,
-                id
-            );
-            if (t[0]) {
-                this.style['grid-template-rows']=r;
-                this.style['grid-template-columns']=c;
-                this.style['grid-template-areas']=t[1];
-                let st=[...new Set(t[1].split(' '))].sort();
-                registerChildren(this.children,st,id);
-            }
         }
     }
 );

@@ -4,14 +4,28 @@
     <meta charset="UTF-8">
     <title>layout-it tests</title>
     <script type="module" src="./../index.js"></script>
+    <style>
+        .text {
+            font-size:2rem;
+            font-weight: bolder;
+        }
+    </style>
 </head>
 <body>
-<grid-it style="height: 100vh" rows="3fr 2fr 2fr 3fr" columns="1fr" areas="a b c d">
-    <div style="background:green">1</div>
-    <center-it style="background:yellow">2</center-it>
-    <div style="background:red">3</div>
-    <center-it style="background:blue;">4</center-it>
+<grid-it class="text" id="gi" style="height: 100vh" rows="30fr 2fr 2fr 3fr" columns="1fr" areas="a . b c">
+    <div style="background:lightgreen">1</div>
+    <center-it style="background:lightyellow">2</center-it>
+    <div style="background:orangered">3</div>
+    
 </grid-it>
-
+<script>
+    const shuffle=(a) => a.sort(() => Math.random() - 0.5);
+    const areas='a . b c'.split(' ');
+    setInterval(
+        ()=> {
+            gi.setAttribute('areas',shuffle(areas).join(' '));
+        },1000
+    )
+</script>
 </body>
 </html>

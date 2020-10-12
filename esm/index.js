@@ -1,12 +1,10 @@
 import './grid-it.js';
 import './center-it.js';
+// https://css-tricks.com/box-sizing/
 import ustyler from 'ustyler';
 ustyler(`
-    html, body {
-        padding:0;
-        margin:0;
-    }
-    *, *::before, *::after {
-        box-sizing: border-box;
-    }`
-);
+html, *, *:before, *:after {
+      box-sizing: border-box;
+      margin:0;
+      padding:0;
+}`);

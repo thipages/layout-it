@@ -1,14 +1,16 @@
 {
   "name": "layout-it",
   "version": "0.4.0",
-  "description": "layout custom elements",
+  "description": "custom elements for building layouts",
   "keywords": [
     "html",
     "css",
     "layout",
     "grid",
     "center",
-    "custom-element"
+    "custom-element",
+    "custom-elements",
+    "ui",
   ],
   "author": "Thierry PAGES",
   "license": "MIT",

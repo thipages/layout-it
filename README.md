@@ -8,8 +8,8 @@ Custom elements for building layouts
 - within HTML via script tag :
 ```html
     <!-- ES5 version -->
-    <script src="min.js"></script>
-    <!-- OR ES6 version -->
+    <script nomodule src="min.js"></script>
+    <!-- ES6 version -->
     <script type="module" src="index.min.js"></script>
 ```
 
@@ -17,7 +17,11 @@ Custom elements for building layouts
 Layout element for building flex grids
 - extends `HTMLElement`
 - based on `display:grid` style
-- with three custom attributes `rows`, `cols` and `areas` precursors of corresponding `grid-template-xxx` style properties.
+- with three custom attributes `rows`, `columns` and `areas` precursors of corresponding `grid-template-xxx` style properties.
+
+Compared to `grid-template-xxx` style properties, `rows`, `columns` and `areas` must be declared with the following rules
+- expressions in`rows` and `columns` should not contain spaces, eg `columns="repeat(3,1fr)"`, not `columns="repeat(3, 1fr)"`
+- `areas` has been simplified compared to `grid-template-areas` and it is just a sequence of letters or digits separated by (multiple) spaces, eg `areas="a b c d"`, not  `areas="'a' 'b' 'c' 'd'"`. The sequence of letters match the grid children order. 
 ### Examples
 ```html
     <!-- 3 rows header/footer layout -->
@@ -46,6 +50,7 @@ Layout element for building flex grids
         <div>Main</div>
         <div>Footer</div>
     </grid-it>
+
     <!-- 3 rows header/footer with 3 main equal columns
          Note : attributes supports multiple spaces
                 except for expression (see upper)-->

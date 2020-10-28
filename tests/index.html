@@ -5,19 +5,11 @@
     <title>layout-it tests</title>
     <script type="module" src="./../min.js"></script>
     <style>
-        body {
-            width:100%;
-            height:100vh;
-        }
-        .text {
-            font-size:2rem;
-            font-weight: bolder;
-        }
         :not(:defined) {display:none;}
     </style>
 </head>
 <body>
-<grid-it id="container" style="height: 100vh" rows="1fr" columns="1fr 1fr" areas="a b">
+<grid-it id="container" style="background:lightcoral;height: 100vh" rows="1fr" columns="1fr 1fr" areas="a b">
 
 </grid-it>
 <script>
@@ -31,11 +23,11 @@
         'lightsalmon'
     ]
     const view=(m)=>`
-<grid-it style="border:1px solid black"
+<grid-it style="border:2px solid red;height:10vh;"
          rows="${m.rows}"
          columns="${m.columns}"
          areas="${m.areas}">
-    ${m.items.map((v,i)=>`<div style="border:1px solid blue;background:${bg_color[i]}">${v}</div>`)}
+    ${m.items.map((v,i)=>`<div style="border:1px solid blue;background:${bg_color[i]}">${v}</div>`).join('')}
 </grid-it>`;
     const layouts=[
         {rows:'auto 1fr auto',columns:'1fr',areas:'a b c',items:['Header','Main','Footer']},
@@ -46,16 +38,29 @@
         const wrap = (c, t = 'div') => `<${t}>${c}</${t}>`;
         const wrapMany = (t, ...c) => wrap(c.join(''), t);
         const code = (m) => Object.entries(m).map(([k, v]) => `<div style="padding:4px"><span style="font-weight:bold">${k}</span> ${v}</div>`).join('');
-        const content = (m,i) => view(m) + wrap(wrapMany('column-it',wrap('Example '+i,'h3'), ...code(m), `<button id="btn">Next</button>`), 'center-it');
         const updateView = (i) => container.innerHTML = content(layouts[i],i);
+        const input=(id,val)=>`<input id="${id}" value="${val}" />`;
+        const form=(values)=> wrapMany(
+            'center-it',
+            ...(values?values:[]).map(
+                (v,i)=>input('i'+i,v)
+            ),
+            '<button id="btn2">Update</button>'
+        );
+        const content = (m,i) =>
+            [
+                view(m),
+                wrap(wrapMany('column-it',wrap('Example '+i,'h3'), ...code(m), `<button id="btn">Next</button>`), 'center-it')
+            ].join('')
         const update = () => {
             i++;
             if (i === num) i = 0;
+            console.log(content(layouts[i],i));
             updateView(i);
             document.getElementById('btn').removeEventListener('click', update);
             document.getElementById('btn').addEventListener('click', update);
         }
-        let i = 0, num = layouts.length;
+        let i = -1, num = layouts.length;
         //setInterval(update,2000)
         update();
     }

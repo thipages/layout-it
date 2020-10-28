@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>layout-it tests</title>
+    <script type="module" src="./../min.js"></script>
+    <style>
+        body {
+            width:100%;
+            height:100vh;
+        }
+        .text {
+            font-size:2rem;
+            font-weight: bolder;
+        }
+        :not(:defined) {display:none;}
+    </style>
+</head>
+<body>
+<grid-it id="container" style="height: 100vh" rows="1fr" columns="1fr 1fr" areas="a b">
+
+</grid-it>
+<script>
+    const bg_color=[
+        'lightgreen',
+        'lightblue',
+        'lightgrey',
+        'lightcoral',
+        'lightpink',
+        'lightcyan',
+        'lightsalmon'
+    ]
+    const view=(m)=>`
+<grid-it style="border:1px solid black"
+         rows="${m.rows}"
+         columns="${m.columns}"
+         areas="${m.areas}">
+    ${m.items.map((v,i)=>`<div style="border:1px solid blue;background:${bg_color[i]}">${v}</div>`)}
+</grid-it>`;
+    const layouts=[
+        {rows:'auto 1fr auto',columns:'1fr',areas:'a b c',items:['Header','Main','Footer']},
+        {rows:'auto 1fr auto',columns:'minmax(min-content,33%) 1fr',areas:'a a b c d d',items:['Header','Main', 'Left','Footer']},
+        {rows:'auto 1fr auto',columns:'1fr 1fr 1fr',areas:'a a a   b c d   e e e',items:['Header','Main', 'Left','Right','Footer']}
+    ];
+    const main=()=> {
+        const wrap = (c, t = 'div') => `<${t}>${c}</${t}>`;
+        const wrapMany = (t, ...c) => wrap(c.join(''), t);
+        const code = (m) => Object.entries(m).map(([k, v]) => `<div style="padding:4px"><span style="font-weight:bold">${k}</span> ${v}</div>`).join('');
+        const content = (m,i) => view(m) + wrap(wrapMany('column-it',wrap('Example '+i,'h3'), ...code(m), `<button id="btn">Next</button>`), 'center-it');
+        const updateView = (i) => container.innerHTML = content(layouts[i],i);
+        const update = () => {
+            i++;
+            if (i === num) i = 0;
+            updateView(i);
+            document.getElementById('btn').removeEventListener('click', update);
+            document.getElementById('btn').addEventListener('click', update);
+        }
+        let i = 0, num = layouts.length;
+        //setInterval(update,2000)
+        update();
+    }
+    main();
+</script>
+</body>
+</html>

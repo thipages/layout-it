@@ -8,6 +8,7 @@ const getTemplateAreas=(rowNum, colNum, areas, uid)=> {
     const rows =(arr,n)=> Array.from({ length: arr.length / n }, (_, i) => arr.slice(i * n, i * n + n));
     let p=rows(areas.split(' '), colNum);
     let r=[];
+    // todo : it van be a series of dots, not only one
     for (let i=0;i<p.length;i++) r.push(`'${p[i].map(v=>v==='.'?v:uid+v).join(" ")}'`);
     return r.join(' ');
 };
@@ -56,6 +57,63 @@ customElements.define(
         }
     }
 );
+
+customElements.define(
+    'isolate-it',
+    class extends HTMLElement {
+        connectedCallback() {
+            this.style.marginLeft = 'auto';
+            this.style.marginRight = 'auto';
+        }
+    }
+);
+
+customElements.define(
+    'row-it',
+    class extends HTMLElement {
+        static get observedAttributes() { return ['justify-content','align-items']; }
+        attributeChangedCallback(name, oldValue, newValue) {
+            this.style[name] = newValue;
+        }
+        connectedCallback() {
+            this.style.display = 'flex';
+            this.style.flexDirection = 'row';
+        }
+    }
+);
+
+customElements.define(
+    'column-it',
+    class extends HTMLElement {
+        static get observedAttributes() { return ['justify-content','align-items']; }
+        attributeChangedCallback(name, oldValue, newValue) {
+            this.style[name] = newValue;
+        }
+        connectedCallback() {
+            this.style.display = 'flex';
+            this.style.flexDirection = 'column';
+        }
+    }
+);
+
+const attrs$1= {
+    P100: ()=>({height:'100%', width:'100%'}),
+    V100: ()=>({height:'100vh', width:'100vw'}),
+    'center-it':()=>({display:'flex','justify-content':'center','align-items':'center'})
+};
+customElements.define('style-it',class extends HTMLElement{
+    connectedCallback() {
+        this.getAttributeNames().forEach(v=>{
+            if (v in attrs$1) {
+                this.style[v]=Object.entries(attrs$1[v](this.getAttribute(v))).forEach(
+                    ([k,v])=>this.style[k]=v
+                );
+                console.log('cust',v);
+            } else
+                if (v in this.style) this.style[v]=this.getAttribute(v);
+        });
+    }
+});
 
 /**
  * Create, append, and return, a style node with the passed CSS content.

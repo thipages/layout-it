@@ -1,6 +1,6 @@
 {
   "name": "layout-it",
-  "version": "0.4.21",
+  "version": "0.4.3",
   "description": "custom elements for building layouts",
   "keywords": [
     "html",
@@ -20,6 +20,7 @@
     "url": "git+https://github.com/thipages/layout-it.git"
   },
   "dependencies": {
+    "uhtml": "^2.1.2",
     "ustyler": "^1.0.1"
   },
   "devDependencies": {

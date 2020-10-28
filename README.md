@@ -61,8 +61,7 @@ Compared to `grid-template-xxx` style properties, `rows`, `columns` and `areas` 
         <div>Header</div>
         <div>Left</div>
         <div>Main</div>
-        <div>Right Menu</div>
-        <div>Main</div>
+        <div>Right</div>
         <div>Footer</div>
     </grid-it>
 ```

@@ -8,6 +8,7 @@ const getTemplateAreas=(rowNum, colNum, areas, uid)=> {
     const rows =(arr,n)=> Array.from({ length: arr.length / n }, (_, i) => arr.slice(i * n, i * n + n));
     let p=rows(areas.split(' '), colNum);
     let r=[];
+    // todo : it van be a series of dots, not only one
     for (let i=0;i<p.length;i++) r.push(`'${p[i].map(v=>v==='.'?v:uid+v).join(" ")}'`);
     return r.join(' ');
 };

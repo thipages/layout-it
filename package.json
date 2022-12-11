@@ -20,7 +20,6 @@
     "url": "git+https://github.com/thipages/layout-it.git"
   },
   "dependencies": {
-    "uhtml": "^2.1.2",
     "ustyler": "^1.0.1"
   },
   "devDependencies": {

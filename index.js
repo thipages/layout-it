@@ -96,25 +96,6 @@ customElements.define(
     }
 );
 
-const attrs$1= {
-    P100: ()=>({height:'100%', width:'100%'}),
-    V100: ()=>({height:'100vh', width:'100vw'}),
-    'center-it':()=>({display:'flex','justify-content':'center','align-items':'center'})
-};
-customElements.define('style-it',class extends HTMLElement{
-    connectedCallback() {
-        this.getAttributeNames().forEach(v=>{
-            if (v in attrs$1) {
-                this.style[v]=Object.entries(attrs$1[v](this.getAttribute(v))).forEach(
-                    ([k,v])=>this.style[k]=v
-                );
-                console.log('cust',v);
-            } else
-                if (v in this.style) this.style[v]=this.getAttribute(v);
-        });
-    }
-});
-
 /**
  * Create, append, and return, a style node with the passed CSS content.
  * @param {string|string[]} template the CSS text or a template literal array.
@@ -130,6 +111,8 @@ function ustyler(template) {
   style.appendChild(document.createTextNode(text.join('')));
   return document.head.appendChild(style);
 }
+
+// https://css-tricks.com/box-sizing/
 
 ustyler(`
 html, *, *:before, *:after {
